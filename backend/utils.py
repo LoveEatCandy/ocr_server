@@ -6,7 +6,7 @@ import io
 
 import retry
 
-from .config import APP_KEY, APP_SECRET
+from config import APP_KEY, APP_SECRET
 
 YOUDAO_URL = "https://openapi.youdao.com/ocrtransapi"
 
