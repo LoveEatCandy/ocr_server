@@ -2,3 +2,4 @@ requests
 fastapi
 retry
 uvicorn
+python-multipart

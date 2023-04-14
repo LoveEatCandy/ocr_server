@@ -8,12 +8,18 @@ from fastapi.staticfiles import StaticFiles
 
 from config import IMG_RECORD_FILE, IMG_RESULT_FILE, STATIC_DIR
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+)
 logger = logging.getLogger()
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 count = 1
+with open(IMG_RECORD_FILE, "r") as f:
+    for line in f.readlines():
+        count += 1
 
 
 @app.post("/api/upload")
@@ -24,11 +30,11 @@ def upload(file_content: bytes = File()):
         f.write(file_content)
     count += 1
     with open(IMG_RECORD_FILE, "a") as f:
-        f.write(img_path + "\n")
+        f.write("\n" + img_path)
     return {"code": 200}
 
 
-@app.post("/api/img")
+@app.get("/api/img")
 def img():
     data = []
     with open(IMG_RESULT_FILE, "r") as f:
