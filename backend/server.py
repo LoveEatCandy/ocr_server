@@ -1,12 +1,12 @@
+import json
 import logging
 import os
-import json
 
+import uvicorn
 from fastapi import FastAPI, File
 from fastapi.staticfiles import StaticFiles
-import uvicorn
 
-from config import IMG_RECORD_FILE, STATIC_DIR, IMG_RESULT_FILE
+from config import IMG_RECORD_FILE, IMG_RESULT_FILE, STATIC_DIR
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
@@ -16,7 +16,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 count = 1
 
 
-@app.post("/upload")
+@app.post("/api/upload")
 def upload(file_content: bytes = File()):
     global count
     img_path = os.path.join(STATIC_DIR, f"{count}.jpg")
@@ -28,7 +28,7 @@ def upload(file_content: bytes = File()):
     return {"code": 200}
 
 
-@app.post("/img")
+@app.post("/api/img")
 def img():
     data = []
     with open(IMG_RESULT_FILE, "r") as f:
