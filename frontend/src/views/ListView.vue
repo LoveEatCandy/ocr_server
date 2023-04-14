@@ -39,7 +39,7 @@ export default {
       });
     },
     getImageUrl(origin) {
-      return "http://127.0.0.1:8888/" + origin;
+      return "/" + origin;
     },
   },
 };
