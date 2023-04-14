@@ -18,7 +18,7 @@ def encrypt(signStr):
 
 
 @retry.retry(Exception, tries=3, delay=1)
-def connect(
+def translate(
     file_obj: io.BytesIO,
 ):
     q = base64.b64encode(file_obj.read()).decode("utf-8")
