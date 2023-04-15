@@ -43,5 +43,5 @@ def translate(
     }
 
     headers = {"Content-Type": "application/x-www-form-urlencoded"}
-    # return requests.post(YOUDAO_URL, data=data, headers=headers).json()
-    return TEST_CASE
+    return requests.post(YOUDAO_URL, data=data, headers=headers).json()
+    # return TEST_CASE

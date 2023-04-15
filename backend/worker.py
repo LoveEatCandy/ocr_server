@@ -27,7 +27,7 @@ def main():
         with open(IMG_RECORD_FILE, "r") as f:
             imgs = f.read()
         for img in imgs.split("\n"):
-            if img not in records:
+            if img and img not in records:
                 logger.info(f"translating {img}")
                 with open(img, "rb") as f:
                     trans_record = translate(f)
