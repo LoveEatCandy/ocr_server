@@ -3,3 +3,4 @@ fastapi
 retry
 uvicorn
 python-multipart
+pillow

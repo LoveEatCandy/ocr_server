@@ -1,8 +1,11 @@
 import base64
+import io
 import json
 import logging
 import os
 import time
+
+from PIL import Image
 
 from config import IMG_RECORD_FILE, IMG_RESULT_FILE, STATIC_DIR
 from utils import translate
@@ -29,9 +32,17 @@ def main():
         for img in imgs.split("\n"):
             if img and img not in records:
                 logger.info(f"translating {img}")
-                with open(img, "rb") as f:
-                    trans_record = translate(f)
+                im = Image.open(img)
+                im = im.convert("L")
+                f_obj = io.BytesIO()
+                im.save(f_obj, format="jpeg", quality=30)
+                f_obj.seek(0, os.SEEK_SET)
+                trans_record = translate(f_obj)
                 origin_img_name = os.path.basename(img).split(".")[0]
+                with open(
+                    os.path.join(STATIC_DIR, f"{origin_img_name}-translated.json"), "w"
+                ) as f:
+                    json.dump(trans_record, f)
                 translated_img_path = os.path.join(
                     STATIC_DIR, f"{origin_img_name}-translated.jpg"
                 )

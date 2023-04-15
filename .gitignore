@@ -2,3 +2,4 @@
 .venv
 backend/static
 backend/db
+frontend/package-lock.json
